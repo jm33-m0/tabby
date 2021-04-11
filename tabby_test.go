@@ -71,6 +71,15 @@ func Test_FileWriter(t *testing.T) {
 	tabby.Print()
 }
 
+func TestString(t *testing.T) {
+	tabby := New()
+	tabby.AddHeader("NAME", "TITLE", "DEPARTMENT")
+	tabby.AddLine("John Smith", "Developer", "Engineering")
+	if tabby.String() == "" {
+		t.Errorf("String not returning anything")
+	}
+}
+
 func BenchmarkBuffer(b *testing.B) {
 	fd, _ := os.OpenFile("temp.txt", os.O_CREATE|os.O_TRUNC|os.O_WRONLY, 0644)
 	defer fd.Close()

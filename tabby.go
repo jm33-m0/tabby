@@ -11,6 +11,7 @@ import (
 // Tabby is returned when New() is called.
 type Tabby struct {
 	writer *tabwriter.Writer
+	text   string // store the table string
 }
 
 // New returns a new *tabwriter.Writer with default config
@@ -29,6 +30,7 @@ func NewCustom(writer *tabwriter.Writer) *Tabby {
 func (t *Tabby) AddLine(args ...interface{}) {
 	formatString := t.buildFormatString(args)
 	fmt.Fprintf(t.writer, formatString, args...)
+	t.text += fmt.Sprintf(formatString, args...)
 }
 
 // AddHeader will write a new table line followed by a seperator
@@ -40,6 +42,11 @@ func (t *Tabby) AddHeader(args ...interface{}) {
 // Print will write the table to the terminal
 func (t *Tabby) Print() {
 	t.writer.Flush()
+}
+
+// String will return the table string
+func (t *Tabby) String() string {
+	return t.text
 }
 
 // addSeparator will write a new dash seperator line based on the args length
