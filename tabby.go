@@ -61,6 +61,7 @@ func (t *Tabby) addSeparator(args []interface{}) {
 		}
 	}
 	b.WriteString("\n")
+	t.text += b.String()
 	b.WriteTo(t.writer)
 }
 
